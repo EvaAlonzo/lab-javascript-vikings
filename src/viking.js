@@ -62,20 +62,51 @@ class War {
     saxonArmy = []
 
   addViking(Viking){
-   this.vikingArmy.push(Viking)
-     
+   this.vikingArmy.push(Viking)  
   }
+
   addSaxon(Saxon){
     this.saxonArmy.push(Saxon)
   }
 
   vikingAttack(){
-    let saxonHealth = (Saxon.health - Viking.strength)
+    //position o index
+   let idRnd = Math.floor(Math.random() * this.saxonArmy.length);
+   let rndSaxon = this.saxonArmy[idRnd]
+   let rndViking = this.vikingArmy[Math.floor(Math.random() * this.saxonArmy.length)]
 
-  return saxonHealth.damage
+   let msg = rndSaxon.receiveDamage(rndViking.attack())
 
+   if(rndSaxon.health <= 0){
+     //splice nos ayuda a eliminar uno o mas elementos
+     this.saxonArmy.splice(idRnd,1)
+     return msg
+   }
+    return msg
   }
+
+  saxonAttack(){
+    let idRnd = Math.floor(Math.random() * this.vikingArmy.length)
+    let rndViking = this.vikingArmy[idRnd]
+    let rndSaxon = this.saxonArmy[Math.floor(Math.random() * this.vikingArmy.length)]
+
+
+    let msg = rndViking.receiveDamage(rndSaxon.attack())
+    if(rndViking.health <= 0){
+      this.vikingArmy.splice(idRnd,1)
+      return msg
+    }
+    return msg
+  }
+
+  showStatus(){
+    if(!this.vikingArmy.length) return "Saxons have fought for their lives and survived another day..."
+    if(!this.saxonArmy.length) return "Vikings have won the war of the century!"
+    if(this.saxonArmy.length && this.vikingArmy.length) return "Vikings and Saxons are still in the thick of battle."
+  }
+  
 }
+
 
 
 
